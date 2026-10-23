@@ -62,7 +62,7 @@ function Editor() {
 
   async function save(publish: boolean) {
     const err = validate();
-    if (err) return toast.error(err);
+    if (err) return void toast.error(err);
     setBusy(true);
     const { data: u } = await supabase.auth.getUser();
     const now = new Date().toISOString();
@@ -71,7 +71,7 @@ function Editor() {
     const { error } = await supabase.from("site_content").upsert(rows);
     if (!error && publish) await supabase.from("site_versions").insert({ content: c as never, note: "Publicação", created_by: u.user?.id ?? null });
     setBusy(false);
-    if (error) return toast.error("Não foi possível salvar. Tente novamente.");
+    if (error) return void toast.error("Não foi possível salvar. Tente novamente.");
     setDirty(false);
     toast.success(publish ? "Alterações publicadas no site!" : "Rascunho salvo.");
   }
@@ -133,7 +133,7 @@ function Media({ label, value, onChange, accept = "image/*" }: { label: string; 
     const path = `${crypto.randomUUID()}-${f.name.replace(/[^\w.\-]/g, "_")}`;
     const { error } = await supabase.storage.from("site-media").upload(path, f, { contentType: f.type });
     setUp(false);
-    if (error) return toast.error("Falha no envio do arquivo.");
+    if (error) return void toast.error("Falha no envio do arquivo.");
     onChange(`/api/public/media/${path}`);
   }
   return <div style={st.label}>{label}
@@ -232,8 +232,8 @@ function Panel({ tab, c, update, setC }: { tab: Tab; c: SiteContent; update: (fn
         <Text label="Texto" area value={c.categories.text} onChange={(v) => update((d) => { d.categories.text = v; })} />
       </div>
       {c.categories.items.map((it, i) => <Row key={i} onUp={() => update((d) => move(d.categories.items, i, -1))} onDown={() => update((d) => move(d.categories.items, i, 1))} onDelete={() => update((d) => { d.categories.items.splice(i, 1); })}>
-        <Text label="Nome da categoria" value={it.name} onChange={(v) => update((d) => { d.categories.items[i].name = v; })} />
-        <Toggle label="Mostrar no site" value={it.visible} onChange={(v) => update((d) => { d.categories.items[i].visible = v; })} />
+        <Text label="Nome da categoria" value={it.name} onChange={(v) => update((d) => { d.categories.items[i]!.name = v; })} />
+        <Toggle label="Mostrar no site" value={it.visible} onChange={(v) => update((d) => { d.categories.items[i]!.visible = v; })} />
       </Row>)}
       <button style={st.ghost} onClick={() => update((d) => { d.categories.items.push({ name: "Nova categoria", visible: true }); })}><Plus size={14} /> Adicionar categoria</button></>;
     case "Convites em destaque": return <>
@@ -243,12 +243,12 @@ function Panel({ tab, c, update, setC }: { tab: Tab; c: SiteContent; update: (fn
         <Text label="Texto" area value={c.models.text} onChange={(v) => update((d) => { d.models.text = v; })} />
       </div>
       {c.models.items.map((m, i) => <Row key={i} onUp={() => update((d) => move(d.models.items, i, -1))} onDown={() => update((d) => move(d.models.items, i, 1))} onDelete={() => update((d) => { d.models.items.splice(i, 1); })}>
-        <Toggle label="Exibir em destaque no site" value={m.featured} onChange={(v) => update((d) => { d.models.items[i].featured = v; })} />
-        <Text label="Nome" value={m.name} onChange={(v) => update((d) => { d.models.items[i].name = v; })} />
-        <Text label="Categoria" value={m.category} onChange={(v) => update((d) => { d.models.items[i].category = v; })} />
-        <Text label="Frase do convite" value={m.message} onChange={(v) => update((d) => { d.models.items[i].message = v; })} />
-        <label style={st.label}>Estilo de cores<select style={st.input} value={m.style} onChange={(e) => update((d) => { d.models.items[i].style = e.target.value as "garden"; })}><option value="garden">Rosado</option><option value="wedding">Verde sálvia</option><option value="baby">Rosa claro</option></select></label>
-        <Media label="Imagem do convite (opcional)" value={m.imageUrl} onChange={(v) => update((d) => { d.models.items[i].imageUrl = v; })} />
+        <Toggle label="Exibir em destaque no site" value={m.featured} onChange={(v) => update((d) => { d.models.items[i]!.featured = v; })} />
+        <Text label="Nome" value={m.name} onChange={(v) => update((d) => { d.models.items[i]!.name = v; })} />
+        <Text label="Categoria" value={m.category} onChange={(v) => update((d) => { d.models.items[i]!.category = v; })} />
+        <Text label="Frase do convite" value={m.message} onChange={(v) => update((d) => { d.models.items[i]!.message = v; })} />
+        <label style={st.label}>Estilo de cores<select style={st.input} value={m.style} onChange={(e) => update((d) => { d.models.items[i]!.style = e.target.value as "garden"; })}><option value="garden">Rosado</option><option value="wedding">Verde sálvia</option><option value="baby">Rosa claro</option></select></label>
+        <Media label="Imagem do convite (opcional)" value={m.imageUrl} onChange={(v) => update((d) => { d.models.items[i]!.imageUrl = v; })} />
       </Row>)}
       <button style={st.ghost} onClick={() => update((d) => { d.models.items.push({ name: "Novo convite", category: "", style: "garden", message: "Celebre conosco", imageUrl: "", featured: true }); })}><Plus size={14} /> Adicionar convite</button></>;
     case "Como funciona": return <>
@@ -257,8 +257,8 @@ function Panel({ tab, c, update, setC }: { tab: Tab; c: SiteContent; update: (fn
         <Text label="Título" value={c.steps.title} onChange={(v) => update((d) => { d.steps.title = v; })} />
       </div>
       {c.steps.items.map((s, i) => <Row key={i} onUp={() => update((d) => move(d.steps.items, i, -1))} onDown={() => update((d) => move(d.steps.items, i, 1))} onDelete={() => update((d) => { d.steps.items.splice(i, 1); })}>
-        <Text label={`Passo ${i + 1} — título`} value={s.title} onChange={(v) => update((d) => { d.steps.items[i].title = v; })} />
-        <Text label="Descrição" area value={s.text} onChange={(v) => update((d) => { d.steps.items[i].text = v; })} />
+        <Text label={`Passo ${i + 1} — título`} value={s.title} onChange={(v) => update((d) => { d.steps.items[i]!.title = v; })} />
+        <Text label="Descrição" area value={s.text} onChange={(v) => update((d) => { d.steps.items[i]!.text = v; })} />
       </Row>)}
       <button style={st.ghost} onClick={() => update((d) => { d.steps.items.push({ title: "Novo passo", text: "" }); })}><Plus size={14} /> Adicionar passo</button></>;
     case "Chamada final": return <>
