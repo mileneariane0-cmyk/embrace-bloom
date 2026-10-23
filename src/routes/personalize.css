@@ -2,3 +2,4 @@
 .pz-admin-link{font-size:11px;color:#a79b9e!important;text-decoration:none;letter-spacing:.2px}.pz-admin-link:hover,.pz-admin-link:focus-visible{color:#75152f!important;text-decoration:underline}
 
 .pz-header-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#75152f!important;white-space:nowrap}.pz-header-link:hover{text-decoration:underline}.pz-mobile-extra{padding-top:0}.pz-mobile-extra a{font-size:14px;color:#75152f;text-decoration:none;padding:5px 0}@media(max-width:1100px){.pz-links{gap:12px}.pz-links .pz-button{padding:12px 16px}}
+.pz-logo img{height:58px;width:auto;display:block}.pz-footer .pz-logo img{height:48px}@media(max-width:800px){.pz-logo img{height:46px}}
