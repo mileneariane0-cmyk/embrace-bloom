@@ -14,10 +14,10 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as MinhaContaRouteImport } from './routes/minha-conta'
 import { Route as OrcamentoRouteImport } from './routes/orcamento'
 import { Route as AdminAcessoRouteImport } from './routes/admin/acesso'
-import { Route as AdminGestaoRouteImport } from './routes/admin/gestao'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminRedefinirSenhaRouteImport } from './routes/admin/redefinir-senha'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminGestaoRouteImport } from './routes/_authenticated/admin/gestao'
 import { Route as AuthenticatedAdminPersonalizarRouteImport } from './routes/_authenticated/admin/personalizar'
 import { Route as ApiPublicMediaSplatRouteImport } from './routes/api/public/media.$'
 
@@ -45,11 +45,6 @@ const AdminAcessoRoute = AdminAcessoRouteImport.update({
   path: '/admin/acesso',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminGestaoRoute = AdminGestaoRouteImport.update({
-  id: '/admin/gestao',
-  path: '/admin/gestao',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
   path: '/admin/login',
@@ -65,6 +60,12 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminGestaoRoute =
+  AuthenticatedAdminGestaoRouteImport.update({
+    id: '/admin/gestao',
+    path: '/admin/gestao',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminPersonalizarRoute =
   AuthenticatedAdminPersonalizarRouteImport.update({
     id: '/admin/personalizar',
@@ -82,9 +83,9 @@ export interface FileRoutesByFullPath {
   '/minha-conta': typeof MinhaContaRoute
   '/orcamento': typeof OrcamentoRoute
   '/admin/acesso': typeof AdminAcessoRoute
-  '/admin/gestao': typeof AdminGestaoRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
+  '/admin/gestao': typeof AuthenticatedAdminGestaoRoute
   '/admin/personalizar': typeof AuthenticatedAdminPersonalizarRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
@@ -94,9 +95,9 @@ export interface FileRoutesByTo {
   '/minha-conta': typeof MinhaContaRoute
   '/orcamento': typeof OrcamentoRoute
   '/admin/acesso': typeof AdminAcessoRoute
-  '/admin/gestao': typeof AdminGestaoRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
+  '/admin/gestao': typeof AuthenticatedAdminGestaoRoute
   '/admin/personalizar': typeof AuthenticatedAdminPersonalizarRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
@@ -108,9 +109,9 @@ export interface FileRoutesById {
   '/minha-conta': typeof MinhaContaRoute
   '/orcamento': typeof OrcamentoRoute
   '/admin/acesso': typeof AdminAcessoRoute
-  '/admin/gestao': typeof AdminGestaoRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
+  '/_authenticated/admin/gestao': typeof AuthenticatedAdminGestaoRoute
   '/_authenticated/admin/personalizar': typeof AuthenticatedAdminPersonalizarRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
@@ -122,9 +123,9 @@ export interface FileRouteTypes {
     | '/minha-conta'
     | '/orcamento'
     | '/admin/acesso'
-    | '/admin/gestao'
     | '/admin/login'
     | '/admin/redefinir-senha'
+    | '/admin/gestao'
     | '/admin/personalizar'
     | '/admin/'
     | '/api/public/media/$'
@@ -134,9 +135,9 @@ export interface FileRouteTypes {
     | '/minha-conta'
     | '/orcamento'
     | '/admin/acesso'
-    | '/admin/gestao'
     | '/admin/login'
     | '/admin/redefinir-senha'
+    | '/admin/gestao'
     | '/admin/personalizar'
     | '/admin'
     | '/api/public/media/$'
@@ -147,9 +148,9 @@ export interface FileRouteTypes {
     | '/minha-conta'
     | '/orcamento'
     | '/admin/acesso'
-    | '/admin/gestao'
     | '/admin/login'
     | '/admin/redefinir-senha'
+    | '/_authenticated/admin/gestao'
     | '/_authenticated/admin/personalizar'
     | '/_authenticated/admin/'
     | '/api/public/media/$'
@@ -161,7 +162,6 @@ export interface RootRouteChildren {
   MinhaContaRoute: typeof MinhaContaRoute
   OrcamentoRoute: typeof OrcamentoRoute
   AdminAcessoRoute: typeof AdminAcessoRoute
-  AdminGestaoRoute: typeof AdminGestaoRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminRedefinirSenhaRoute: typeof AdminRedefinirSenhaRoute
   ApiPublicMediaSplatRoute: typeof ApiPublicMediaSplatRoute
@@ -204,13 +204,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAcessoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin/gestao': {
-      id: '/admin/gestao'
-      path: '/admin/gestao'
-      fullPath: '/admin/gestao'
-      preLoaderRoute: typeof AdminGestaoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin/login': {
       id: '/admin/login'
       path: '/admin/login'
@@ -232,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/gestao': {
+      id: '/_authenticated/admin/gestao'
+      path: '/admin/gestao'
+      fullPath: '/admin/gestao'
+      preLoaderRoute: typeof AuthenticatedAdminGestaoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/personalizar': {
       id: '/_authenticated/admin/personalizar'
       path: '/admin/personalizar'
@@ -250,11 +250,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminGestaoRoute: typeof AuthenticatedAdminGestaoRoute
   AuthenticatedAdminPersonalizarRoute: typeof AuthenticatedAdminPersonalizarRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminGestaoRoute: AuthenticatedAdminGestaoRoute,
   AuthenticatedAdminPersonalizarRoute: AuthenticatedAdminPersonalizarRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
@@ -268,7 +270,6 @@ const rootRouteChildren: RootRouteChildren = {
   MinhaContaRoute: MinhaContaRoute,
   OrcamentoRoute: OrcamentoRoute,
   AdminAcessoRoute: AdminAcessoRoute,
-  AdminGestaoRoute: AdminGestaoRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminRedefinirSenhaRoute: AdminRedefinirSenhaRoute,
   ApiPublicMediaSplatRoute: ApiPublicMediaSplatRoute,

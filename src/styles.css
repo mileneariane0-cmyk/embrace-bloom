@@ -142,3 +142,18 @@
     color: var(--color-foreground);
   }
 }
+
+.management-theme {
+  --background: #fff8f6;
+  --foreground: #30272b;
+  --primary: #75152f;
+  --primary-foreground: #fff8f6;
+  --card: #ffffff;
+  --muted: #f6e9ec;
+  --muted-foreground: #716469;
+  --accent: #f3dadf;
+  --accent-foreground: #75152f;
+  --border: #ead6db;
+  --input: #ead6db;
+  --ring: #819b87;
+}

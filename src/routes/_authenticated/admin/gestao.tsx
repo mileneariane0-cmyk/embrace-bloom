@@ -4,7 +4,7 @@ import { getAdminStatus } from "@/lib/admin.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, CalendarHeart, Link2, ShoppingBag, Users, ShieldCheck } from "lucide-react";
 
-export const Route = createFileRoute("/admin/gestao")({ component: Gestao });
+export const Route = createFileRoute("/_authenticated/admin/gestao")({ component: Gestao });
 type Tab = "convites"|"links"|"pedidos"|"clientes";
 const tabs = [
  {key:"convites" as Tab,title:"Convites",icon:CalendarHeart,table:"invitation_models"},
