@@ -10,13 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as MinhaContaRouteImport } from './routes/minha-conta'
 import { Route as OrcamentoRouteImport } from './routes/orcamento'
+import { Route as AdminAcessoRouteImport } from './routes/admin/acesso'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
+import { Route as AdminRedefinirSenhaRouteImport } from './routes/admin/redefinir-senha'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MinhaContaRoute = MinhaContaRouteImport.update({
@@ -29,44 +37,95 @@ const OrcamentoRoute = OrcamentoRouteImport.update({
   path: '/orcamento',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAcessoRoute = AdminAcessoRouteImport.update({
+  id: '/admin/acesso',
+  path: '/admin/acesso',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin/login',
   path: '/admin/login',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRedefinirSenhaRoute = AdminRedefinirSenhaRouteImport.update({
+  id: '/admin/redefinir-senha',
+  path: '/admin/redefinir-senha',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/minha-conta': typeof MinhaContaRoute
   '/orcamento': typeof OrcamentoRoute
+  '/admin/acesso': typeof AdminAcessoRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/minha-conta': typeof MinhaContaRoute
   '/orcamento': typeof OrcamentoRoute
+  '/admin/acesso': typeof AdminAcessoRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/minha-conta': typeof MinhaContaRoute
   '/orcamento': typeof OrcamentoRoute
+  '/admin/acesso': typeof AdminAcessoRoute
   '/admin/login': typeof AdminLoginRoute
+  '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/minha-conta' | '/orcamento' | '/admin/login'
+  fullPaths:
+    | '/'
+    | '/minha-conta'
+    | '/orcamento'
+    | '/admin/acesso'
+    | '/admin/login'
+    | '/admin/redefinir-senha'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/minha-conta' | '/orcamento' | '/admin/login'
-  id: '__root__' | '/' | '/minha-conta' | '/orcamento' | '/admin/login'
+  to:
+    | '/'
+    | '/minha-conta'
+    | '/orcamento'
+    | '/admin/acesso'
+    | '/admin/login'
+    | '/admin/redefinir-senha'
+    | '/admin'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/minha-conta'
+    | '/orcamento'
+    | '/admin/acesso'
+    | '/admin/login'
+    | '/admin/redefinir-senha'
+    | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   MinhaContaRoute: typeof MinhaContaRoute
   OrcamentoRoute: typeof OrcamentoRoute
+  AdminAcessoRoute: typeof AdminAcessoRoute
   AdminLoginRoute: typeof AdminLoginRoute
+  AdminRedefinirSenhaRoute: typeof AdminRedefinirSenhaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -76,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/minha-conta': {
@@ -92,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrcamentoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/acesso': {
+      id: '/admin/acesso'
+      path: '/admin/acesso'
+      fullPath: '/admin/acesso'
+      preLoaderRoute: typeof AdminAcessoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/login': {
       id: '/admin/login'
       path: '/admin/login'
@@ -99,14 +172,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/redefinir-senha': {
+      id: '/admin/redefinir-senha'
+      path: '/admin/redefinir-senha'
+      fullPath: '/admin/redefinir-senha'
+      preLoaderRoute: typeof AdminRedefinirSenhaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   MinhaContaRoute: MinhaContaRoute,
   OrcamentoRoute: OrcamentoRoute,
+  AdminAcessoRoute: AdminAcessoRoute,
   AdminLoginRoute: AdminLoginRoute,
+  AdminRedefinirSenhaRoute: AdminRedefinirSenhaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
