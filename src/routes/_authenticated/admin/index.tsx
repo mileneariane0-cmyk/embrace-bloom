@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -44,7 +44,8 @@ function Painel() {
   return (
     <AdminCard title="Painel administrativo" wide>
       <p style={{ textAlign: "center", color: "#716469" }}>Bem-vinda, {data.email}</p>
-      <div style={s.ok}>Seu acesso está ativo e protegido. As próximas seções (Personalizar Site, convites, pedidos e clientes) aparecerão aqui.</div>
+      <Link to="/admin/personalizar" style={{ ...s.button, display: "block", textAlign: "center", textDecoration: "none", boxSizing: "border-box" }}>Personalizar Site</Link>
+      <div style={s.ok}>Em breve: convites, links dos convites, pedidos e clientes.</div>
       <ChangePassword />
       <button style={{ ...s.button, background: "transparent", color: "#75152F", border: "1px solid #75152F" }} onClick={logout}>Sair</button>
     </AdminCard>

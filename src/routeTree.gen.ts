@@ -17,6 +17,7 @@ import { Route as AdminAcessoRouteImport } from './routes/admin/acesso'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminRedefinirSenhaRouteImport } from './routes/admin/redefinir-senha'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminPersonalizarRouteImport } from './routes/_authenticated/admin/personalizar'
 import { Route as ApiPublicMediaSplatRouteImport } from './routes/api/public/media.$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -58,6 +59,12 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminPersonalizarRoute =
+  AuthenticatedAdminPersonalizarRouteImport.update({
+    id: '/admin/personalizar',
+    path: '/admin/personalizar',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiPublicMediaSplatRoute = ApiPublicMediaSplatRouteImport.update({
   id: '/api/public/media/$',
   path: '/api/public/media/$',
@@ -71,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/admin/acesso': typeof AdminAcessoRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
+  '/admin/personalizar': typeof AuthenticatedAdminPersonalizarRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
@@ -81,6 +89,7 @@ export interface FileRoutesByTo {
   '/admin/acesso': typeof AdminAcessoRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
+  '/admin/personalizar': typeof AuthenticatedAdminPersonalizarRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
@@ -93,6 +102,7 @@ export interface FileRoutesById {
   '/admin/acesso': typeof AdminAcessoRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
+  '/_authenticated/admin/personalizar': typeof AuthenticatedAdminPersonalizarRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
     | '/admin/acesso'
     | '/admin/login'
     | '/admin/redefinir-senha'
+    | '/admin/personalizar'
     | '/admin/'
     | '/api/public/media/$'
   fileRoutesByTo: FileRoutesByTo
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '/admin/acesso'
     | '/admin/login'
     | '/admin/redefinir-senha'
+    | '/admin/personalizar'
     | '/admin'
     | '/api/public/media/$'
   id:
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
     | '/admin/acesso'
     | '/admin/login'
     | '/admin/redefinir-senha'
+    | '/_authenticated/admin/personalizar'
     | '/_authenticated/admin/'
     | '/api/public/media/$'
   fileRoutesById: FileRoutesById
@@ -199,6 +212,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/personalizar': {
+      id: '/_authenticated/admin/personalizar'
+      path: '/admin/personalizar'
+      fullPath: '/admin/personalizar'
+      preLoaderRoute: typeof AuthenticatedAdminPersonalizarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/media/$': {
       id: '/api/public/media/$'
       path: '/api/public/media/$'
@@ -210,10 +230,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminPersonalizarRoute: typeof AuthenticatedAdminPersonalizarRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminPersonalizarRoute: AuthenticatedAdminPersonalizarRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
