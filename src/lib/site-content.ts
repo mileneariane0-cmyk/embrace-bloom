@@ -31,18 +31,18 @@ export type SiteContent = {
 const btn = (label: string, link: string): LinkButton => ({ label, link, visible: true });
 
 export const defaultContent: SiteContent = {
-  brand: { logoUrl: "", faviconUrl: "", siteTitle: "Personalizê | Convites digitais personalizados", siteDescription: "Personalizê — Cada detalhe é único. Convites digitais personalizados para celebrações especiais." },
+  brand: { logoUrl: "", faviconUrl: "", siteTitle: "Personalizê | Loja de produtos personalizados", siteDescription: "Personalizê — Cada detalhe é único. Convites virtuais, topos de bolo, papelaria e personalizados para momentos especiais." },
   colors: { wine: "#75152F", pink: "#F29BAA", sage: "#819B87", cream: "#FFF8F6", ink: "#30272B" },
   banner: { enabled: false, text: "Novidade: convites digitais com confirmação de presença!", link: "/orcamento" },
-  header: { menuStart: "Início", menuInvites: "Convites", menuCategories: "Categorias", menuHow: "Como funciona", showAccount: true, cta: btn("Solicite seu orçamento", "/orcamento") },
+  header: { menuStart: "Início", menuInvites: "Produtos", menuCategories: "Categorias", menuHow: "Como funciona", showAccount: true, cta: btn("Solicite seu orçamento", "/orcamento") },
   hero: {
-    visible: true, eyebrow: "Personalizê • Convites digitais", title: "Momentos únicos merecem", highlight: "detalhes especiais.",
-    text: "Convites digitais feitos com carinho para transformar suas celebrações em memórias inesquecíveis. Cada história é única. Cada detalhe também.",
+    visible: true, eyebrow: "Personalizê • Loja de personalizados", title: "Cada celebração merece", highlight: "um toque único.",
+    text: "Convites virtuais, topos de bolo, lembrancinhas e personalizados para tornar cada ocasião ainda mais especial. Criamos com carinho para você.",
     imageUrl: "", videoUrl: "", cardEyebrow: "Você é nosso convidado", cardTitle: "Um dia especial", cardText: "feito para celebrar o amor", badge: "♡ Cada detalhe é único",
-    primary: btn("Explorar convites", "#modelos"), secondary: btn("Como funciona", "#como-funciona"),
+    primary: btn("Explorar personalizados", "#categorias"), secondary: btn("Solicitar orçamento", "/orcamento"),
   },
-  categories: { eyebrow: "Para cada ocasião", title: "O que vamos celebrar?", text: "Uma coleção pensada para todos os momentos que merecem ser lembrados.",
-    items: ["Aniversário infantil", "Aniversário adulto", "Casamento", "Chá de bebê", "Chá revelação", "Formatura"].map((name) => ({ name, visible: true })) },
+  categories: { eyebrow: "Nossa loja", title: "Personalizados para cada momento", text: "Explore nossas linhas de produtos. Novas categorias e coleções chegam em breve.",
+    items: ["Convites Virtuais", "Topos de Bolo", "Lembrancinhas", "Papelaria Personalizada", "Kits para Festas"].map((name) => ({ name, visible: true })) },
   models: { eyebrow: "Inspirações especiais", title: "Encontre seu convite perfeito", text: "Conheça nossos estilos de inspiração. O catálogo comercial estará disponível em breve.",
     items: [
       { name: "Jardim Encantado", category: "Aniversário infantil", style: "garden", message: "Um dia mágico", imageUrl: "", featured: true },
