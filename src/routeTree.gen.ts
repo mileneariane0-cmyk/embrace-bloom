@@ -17,6 +17,8 @@ import { Route as AdminAcessoRouteImport } from './routes/admin/acesso'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminRedefinirSenhaRouteImport } from './routes/admin/redefinir-senha'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedAdminPersonalizarRouteImport } from './routes/_authenticated/admin/personalizar'
+import { Route as ApiPublicMediaSplatRouteImport } from './routes/api/public/media.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -57,6 +59,17 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminPersonalizarRoute =
+  AuthenticatedAdminPersonalizarRouteImport.update({
+    id: '/admin/personalizar',
+    path: '/admin/personalizar',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const ApiPublicMediaSplatRoute = ApiPublicMediaSplatRouteImport.update({
+  id: '/api/public/media/$',
+  path: '/api/public/media/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -65,7 +78,9 @@ export interface FileRoutesByFullPath {
   '/admin/acesso': typeof AdminAcessoRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
+  '/admin/personalizar': typeof AuthenticatedAdminPersonalizarRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -74,7 +89,9 @@ export interface FileRoutesByTo {
   '/admin/acesso': typeof AdminAcessoRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
+  '/admin/personalizar': typeof AuthenticatedAdminPersonalizarRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -85,7 +102,9 @@ export interface FileRoutesById {
   '/admin/acesso': typeof AdminAcessoRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
+  '/_authenticated/admin/personalizar': typeof AuthenticatedAdminPersonalizarRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/api/public/media/$': typeof ApiPublicMediaSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -96,7 +115,9 @@ export interface FileRouteTypes {
     | '/admin/acesso'
     | '/admin/login'
     | '/admin/redefinir-senha'
+    | '/admin/personalizar'
     | '/admin/'
+    | '/api/public/media/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -105,7 +126,9 @@ export interface FileRouteTypes {
     | '/admin/acesso'
     | '/admin/login'
     | '/admin/redefinir-senha'
+    | '/admin/personalizar'
     | '/admin'
+    | '/api/public/media/$'
   id:
     | '__root__'
     | '/'
@@ -115,7 +138,9 @@ export interface FileRouteTypes {
     | '/admin/acesso'
     | '/admin/login'
     | '/admin/redefinir-senha'
+    | '/_authenticated/admin/personalizar'
     | '/_authenticated/admin/'
+    | '/api/public/media/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -126,6 +151,7 @@ export interface RootRouteChildren {
   AdminAcessoRoute: typeof AdminAcessoRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminRedefinirSenhaRoute: typeof AdminRedefinirSenhaRoute
+  ApiPublicMediaSplatRoute: typeof ApiPublicMediaSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -186,14 +212,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/personalizar': {
+      id: '/_authenticated/admin/personalizar'
+      path: '/admin/personalizar'
+      fullPath: '/admin/personalizar'
+      preLoaderRoute: typeof AuthenticatedAdminPersonalizarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/public/media/$': {
+      id: '/api/public/media/$'
+      path: '/api/public/media/$'
+      fullPath: '/api/public/media/$'
+      preLoaderRoute: typeof ApiPublicMediaSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminPersonalizarRoute: typeof AuthenticatedAdminPersonalizarRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminPersonalizarRoute: AuthenticatedAdminPersonalizarRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 
@@ -208,6 +250,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminAcessoRoute: AdminAcessoRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminRedefinirSenhaRoute: AdminRedefinirSenhaRoute,
+  ApiPublicMediaSplatRoute: ApiPublicMediaSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

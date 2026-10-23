@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      site_content: {
+        Row: {
+          content: Json
+          id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          content?: Json
+          id: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          content?: Json
+          id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      site_versions: {
+        Row: {
+          content: Json
+          created_at: string
+          created_by: string | null
+          id: string
+          note: string | null
+        }
+        Insert: {
+          content: Json
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          note?: string | null
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          note?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
