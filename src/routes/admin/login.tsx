@@ -42,7 +42,7 @@ function AdminLogin() {
         <button style={s.button} disabled={loading}>{loading ? "Entrando..." : "Entrar"}</button>
       </form>
       <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 10, marginTop: 20 }}>
-        <Link to="/admin/acesso" style={s.link}>Primeiro acesso</Link>
+        
         <Link to="/admin/acesso" style={s.link}>Esqueci minha senha</Link>
       </div>
       <p style={{ textAlign: "center", marginTop: 22 }}><Link to="/" style={{ ...s.link, color: "#819B87" }}>← Voltar para a loja</Link></p>
