@@ -14,6 +14,172 @@ export type Database = {
   }
   public: {
     Tables: {
+      customer_invitations: {
+        Row: {
+          content: Json
+          created_at: string
+          customer_id: string | null
+          expires_at: string | null
+          id: string
+          model_id: string | null
+          order_id: string | null
+          published_at: string | null
+          published_content: Json | null
+          slug: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content?: Json
+          created_at?: string
+          customer_id?: string | null
+          expires_at?: string | null
+          id?: string
+          model_id?: string | null
+          order_id?: string | null
+          published_at?: string | null
+          published_content?: Json | null
+          slug?: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          customer_id?: string | null
+          expires_at?: string | null
+          id?: string
+          model_id?: string | null
+          order_id?: string | null
+          published_at?: string | null
+          published_content?: Json | null
+          slug?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_invitations_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customer_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "customer_invitations_model_id_fkey"
+            columns: ["model_id"]
+            isOneToOne: false
+            referencedRelation: "invitation_models"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "customer_invitations_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: true
+            referencedRelation: "customer_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      customer_orders: {
+        Row: {
+          created_at: string
+          customer_id: string | null
+          customer_information: Json
+          id: string
+          model_id: string | null
+          production_status: string
+        }
+        Insert: {
+          created_at?: string
+          customer_id?: string | null
+          customer_information?: Json
+          id?: string
+          model_id?: string | null
+          production_status?: string
+        }
+        Update: {
+          created_at?: string
+          customer_id?: string | null
+          customer_information?: Json
+          id?: string
+          model_id?: string | null
+          production_status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_orders_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customer_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "customer_orders_model_id_fkey"
+            columns: ["model_id"]
+            isOneToOne: false
+            referencedRelation: "invitation_models"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      customer_profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          phone: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string
+          full_name: string
+          id?: string
+          phone?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      invitation_models: {
+        Row: {
+          category: string
+          content: Json
+          created_at: string
+          id: string
+          status: string
+          title: string
+        }
+        Insert: {
+          category?: string
+          content?: Json
+          created_at?: string
+          id?: string
+          status?: string
+          title: string
+        }
+        Update: {
+          category?: string
+          content?: Json
+          created_at?: string
+          id?: string
+          status?: string
+          title?: string
+        }
+        Relationships: []
+      }
       site_content: {
         Row: {
           content: Json
