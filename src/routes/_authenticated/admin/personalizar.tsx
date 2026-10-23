@@ -44,7 +44,7 @@ function Editor() {
   }, [status?.isOwner]);
 
   useEffect(() => {
-    const h = (e: BeforeUnloadEvent) => { if (dirty) e.preventDefault(); };
+    const h = (e: BeforeUnloadEvent) => { if (dirty) e.preventDefault(); return undefined; };
     window.addEventListener("beforeunload", h);
     return () => window.removeEventListener("beforeunload", h);
   }, [dirty]);
@@ -66,10 +66,10 @@ function Editor() {
     setBusy(true);
     const { data: u } = await supabase.auth.getUser();
     const now = new Date().toISOString();
-    const rows = [{ id: "draft", content: c as never, updated_at: now, updated_by: u.user?.id }];
-    if (publish) rows.push({ id: "published", content: c as never, updated_at: now, updated_by: u.user?.id });
+    const rows = [{ id: "draft", content: c as never, updated_at: now, updated_by: u.user?.id ?? null }];
+    if (publish) rows.push({ id: "published", content: c as never, updated_at: now, updated_by: u.user?.id ?? null });
     const { error } = await supabase.from("site_content").upsert(rows);
-    if (!error && publish) await supabase.from("site_versions").insert({ content: c as never, note: "Publicação", created_by: u.user?.id });
+    if (!error && publish) await supabase.from("site_versions").insert({ content: c as never, note: "Publicação", created_by: u.user?.id ?? null });
     setBusy(false);
     if (error) return toast.error("Não foi possível salvar. Tente novamente.");
     setDirty(false);
@@ -148,8 +148,8 @@ function Media({ label, value, onChange, accept = "image/*" }: { label: string; 
 function Color({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
   return <label style={{ ...st.label, display: "flex", alignItems: "center", gap: 10 }}><input type="color" value={isHexColor(value) ? value : "#000000"} onChange={(e) => onChange(e.target.value)} /><input style={{ ...st.input, width: 110 }} value={value} onChange={(e) => onChange(e.target.value)} /> {label}</label>;
 }
-function move<T>(arr: T[], i: number, d: number) { const j = i + d; if (j < 0 || j >= arr.length) return; [arr[i], arr[j]] = [arr[j], arr[i]]; }
-function Row({ children, onUp, onDown, onDelete }: { children: ReactNode; onUp: () => void; onDown: () => void; onDelete?: () => void }) {
+function move<T>(arr: T[], i: number, d: number) { const j = i + d; if (j < 0 || j >= arr.length) return; const t = arr[i] as T; arr[i] = arr[j] as T; arr[j] = t; }
+function Row({ children, onUp, onDown, onDelete }: { children: ReactNode; onUp: () => void; onDown: () => void; onDelete?: (() => void) | undefined }) {
   return <div style={st.card}><div style={{ display: "flex", gap: 6, justifyContent: "flex-end" }}><button style={st.icon} onClick={onUp} aria-label="Subir"><ArrowUp size={14} /></button><button style={st.icon} onClick={onDown} aria-label="Descer"><ArrowDown size={14} /></button>{onDelete && <button style={st.icon} onClick={() => confirm("Remover este item?") && onDelete()} aria-label="Remover"><Trash2 size={14} /></button>}</div>{children}</div>;
 }
 
