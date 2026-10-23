@@ -1,24 +1,51 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import logo from "@/assets/personalize-logo.png.asset.json";
-import { ShieldCheck, LockKeyhole, ArrowLeft } from "lucide-react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { AdminCard, adminStyles as s } from "@/components/admin/AdminCard";
 
-export const Route = createFileRoute("/admin/login")({ component: AdminLogin });
+export const Route = createFileRoute("/admin/login")({
+  head: () => ({
+    meta: [
+      { title: "Entrar | Administração Personalizê" },
+      { name: "description", content: "Acesso restrito à administração da Personalizê." },
+      { property: "og:title", content: "Administração Personalizê" },
+      { property: "og:description", content: "Acesso restrito à administração da Personalizê." },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
+  component: AdminLogin,
+});
 
 function AdminLogin() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    setLoading(false);
+    if (error) return setError("E-mail ou senha incorretos.");
+    navigate({ to: "/admin", replace: true });
+  }
+
   return (
-    <main style={{ minHeight: "100vh", background: "#FFF8F6", display: "grid", placeItems: "center", padding: 24, fontFamily: "Arial, sans-serif", color: "#30272B" }}>
-      <section style={{ width: "100%", maxWidth: 460, background: "white", padding: "clamp(24px,5vw,46px)", borderRadius: 24, boxShadow: "0 16px 50px #75152f12", border: "1px solid #f1e2e5" }}>
-        <div style={{ textAlign: "center", color: "#75152F" }}>
-          <ShieldCheck size={42} style={{ margin: "0 auto 14px" }} />
-          <h1 style={{ margin: "0 0 8px" }}><img src={logo.url} alt="Personalizê" style={{ width: "100%", maxWidth: 300, height: "auto" }} /></h1>
-          <p style={{ color: "#819B87", letterSpacing: 2, fontSize: 12 }}>ÁREA ADMINISTRATIVA</p>
-        </div>
-        <div style={{ background: "#FFF8F6", border: "1px solid #F2DCE1", padding: 20, borderRadius: 14, margin: "28px 0", display: "flex", gap: 12, alignItems: "flex-start" }}>
-          <LockKeyhole size={22} style={{ flexShrink: 0, color: "#75152F" }}/>
-          <div><strong style={{ color: "#75152F" }}>Acesso em configuração</strong><p style={{ fontSize: 14, lineHeight: 1.7, marginBottom: 0 }}>O login será habilitado após conectar o provedor de autenticação e configurar as permissões administrativas no servidor. Nenhuma senha é solicitada ou armazenada nesta página.</p></div>
-        </div>
-        <Link to="/" style={{ display: "flex", justifyContent: "center", gap: 8, alignItems: "center", padding: 14, borderRadius: 999, background: "#75152F", color: "white", textDecoration: "none" }}><ArrowLeft size={17}/> Voltar para a loja</Link>
-      </section>
-    </main>
+    <AdminCard title="Entrar">
+      <form onSubmit={submit}>
+        <label style={s.label}>E-mail<input style={s.input} type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} /></label>
+        <label style={s.label}>Senha<input style={s.input} type="password" required autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} /></label>
+        {error && <div style={s.error}>{error}</div>}
+        <button style={s.button} disabled={loading}>{loading ? "Entrando..." : "Entrar"}</button>
+      </form>
+      <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 10, marginTop: 20 }}>
+        <Link to="/admin/acesso" style={s.link}>Primeiro acesso</Link>
+        <Link to="/admin/acesso" style={s.link}>Esqueci minha senha</Link>
+      </div>
+      <p style={{ textAlign: "center", marginTop: 22 }}><Link to="/" style={{ ...s.link, color: "#819B87" }}>← Voltar para a loja</Link></p>
+    </AdminCard>
   );
 }
