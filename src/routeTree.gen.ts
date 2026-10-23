@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as MinhaContaRouteImport } from './routes/minha-conta'
 import { Route as OrcamentoRouteImport } from './routes/orcamento'
 import { Route as AdminAcessoRouteImport } from './routes/admin/acesso'
+import { Route as AdminGestaoRouteImport } from './routes/admin/gestao'
 import { Route as AdminLoginRouteImport } from './routes/admin/login'
 import { Route as AdminRedefinirSenhaRouteImport } from './routes/admin/redefinir-senha'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
@@ -42,6 +43,11 @@ const OrcamentoRoute = OrcamentoRouteImport.update({
 const AdminAcessoRoute = AdminAcessoRouteImport.update({
   id: '/admin/acesso',
   path: '/admin/acesso',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminGestaoRoute = AdminGestaoRouteImport.update({
+  id: '/admin/gestao',
+  path: '/admin/gestao',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
@@ -76,6 +82,7 @@ export interface FileRoutesByFullPath {
   '/minha-conta': typeof MinhaContaRoute
   '/orcamento': typeof OrcamentoRoute
   '/admin/acesso': typeof AdminAcessoRoute
+  '/admin/gestao': typeof AdminGestaoRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
   '/admin/personalizar': typeof AuthenticatedAdminPersonalizarRoute
@@ -87,6 +94,7 @@ export interface FileRoutesByTo {
   '/minha-conta': typeof MinhaContaRoute
   '/orcamento': typeof OrcamentoRoute
   '/admin/acesso': typeof AdminAcessoRoute
+  '/admin/gestao': typeof AdminGestaoRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
   '/admin/personalizar': typeof AuthenticatedAdminPersonalizarRoute
@@ -100,6 +108,7 @@ export interface FileRoutesById {
   '/minha-conta': typeof MinhaContaRoute
   '/orcamento': typeof OrcamentoRoute
   '/admin/acesso': typeof AdminAcessoRoute
+  '/admin/gestao': typeof AdminGestaoRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/redefinir-senha': typeof AdminRedefinirSenhaRoute
   '/_authenticated/admin/personalizar': typeof AuthenticatedAdminPersonalizarRoute
@@ -113,6 +122,7 @@ export interface FileRouteTypes {
     | '/minha-conta'
     | '/orcamento'
     | '/admin/acesso'
+    | '/admin/gestao'
     | '/admin/login'
     | '/admin/redefinir-senha'
     | '/admin/personalizar'
@@ -124,6 +134,7 @@ export interface FileRouteTypes {
     | '/minha-conta'
     | '/orcamento'
     | '/admin/acesso'
+    | '/admin/gestao'
     | '/admin/login'
     | '/admin/redefinir-senha'
     | '/admin/personalizar'
@@ -136,6 +147,7 @@ export interface FileRouteTypes {
     | '/minha-conta'
     | '/orcamento'
     | '/admin/acesso'
+    | '/admin/gestao'
     | '/admin/login'
     | '/admin/redefinir-senha'
     | '/_authenticated/admin/personalizar'
@@ -149,6 +161,7 @@ export interface RootRouteChildren {
   MinhaContaRoute: typeof MinhaContaRoute
   OrcamentoRoute: typeof OrcamentoRoute
   AdminAcessoRoute: typeof AdminAcessoRoute
+  AdminGestaoRoute: typeof AdminGestaoRoute
   AdminLoginRoute: typeof AdminLoginRoute
   AdminRedefinirSenhaRoute: typeof AdminRedefinirSenhaRoute
   ApiPublicMediaSplatRoute: typeof ApiPublicMediaSplatRoute
@@ -189,6 +202,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/acesso'
       fullPath: '/admin/acesso'
       preLoaderRoute: typeof AdminAcessoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/gestao': {
+      id: '/admin/gestao'
+      path: '/admin/gestao'
+      fullPath: '/admin/gestao'
+      preLoaderRoute: typeof AdminGestaoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/login': {
@@ -248,6 +268,7 @@ const rootRouteChildren: RootRouteChildren = {
   MinhaContaRoute: MinhaContaRoute,
   OrcamentoRoute: OrcamentoRoute,
   AdminAcessoRoute: AdminAcessoRoute,
+  AdminGestaoRoute: AdminGestaoRoute,
   AdminLoginRoute: AdminLoginRoute,
   AdminRedefinirSenhaRoute: AdminRedefinirSenhaRoute,
   ApiPublicMediaSplatRoute: ApiPublicMediaSplatRoute,
