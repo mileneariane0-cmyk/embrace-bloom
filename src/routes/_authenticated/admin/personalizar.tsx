@@ -10,7 +10,7 @@ import { defaultContent, isHexColor, withDefaults, type CustomSection, type Link
 import logo from "@/assets/personalize-logo.png.asset.json";
 
 export const Route = createFileRoute("/_authenticated/admin/personalizar")({
-  head: () => ({ meta: [{ title: "Personalizar Site | Administração Personalizê" }, { name: "description", content: "Editor do site da Personalizê." }, { property: "og:title", content: "Personalizar Site — Personalizê" }, { property: "og:description", content: "Editor do site da Personalizê." }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Personalizar Site | Administração Personalizê" }, { name: "description", content: "Editor do site da Personalizê." }, { property: "og:title", content: "Personalizar Site — Personalizê" }, { property: "og:description", content: "Editor do site da Personalizê." }, { name: "robots", content: "noindex" }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: Editor,
 });
 

@@ -1,7 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { ArrowLeft, Send, ShieldCheck } from "lucide-react";
-export const Route = createFileRoute("/orcamento")({ component: Orcamento });
+export const Route = createFileRoute("/orcamento")({ head: () => ({ meta: [
+  { title: "Solicitar orçamento | Personalizê" },
+  { name: "description", content: "Solicite um orçamento para seu projeto personalizado na Personalizê." },
+  { property: "og:title", content: "Orçamento — Personalizê" },
+  { property: "og:description", content: "Solicite seu projeto personalizado na Personalizê." },
+  { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
+] }), component: Orcamento });
 const inputStyle = { width: "100%", padding: "12px 14px", border: "1px solid #e8d9db", borderRadius: 10, background: "white", color: "#30272b" };
 function Orcamento() {
   const [form,setForm] = useState({nome:"",telefone:"",email:"",produto:"",evento:"",prazo:"",quantidade:"",descricao:"",observacoes:""});

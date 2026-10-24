@@ -11,6 +11,8 @@ export const Route = createFileRoute("/admin/redefinir-senha")({
       { property: "og:title", content: "Criar senha — Personalizê" },
       { property: "og:description", content: "Defina sua senha de acesso administrativo." },
       { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: RedefinirSenha,

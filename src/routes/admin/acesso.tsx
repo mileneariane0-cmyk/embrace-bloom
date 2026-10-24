@@ -12,6 +12,8 @@ export const Route = createFileRoute("/admin/acesso")({
       { property: "og:title", content: "Recuperar senha — Personalizê" },
       { property: "og:description", content: "Link seguro para criar ou redefinir a senha administrativa." },
       { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Acesso,
