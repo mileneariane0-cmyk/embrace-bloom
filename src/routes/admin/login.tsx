@@ -32,7 +32,7 @@ function AdminLogin() {
     const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
     setLoading(false);
     if (error) return setError("E-mail ou senha incorretos.");
-    navigate({ to: "/admin", replace: true });
+    navigate({ to: "/admin/central", replace: true });
   }
 
   return (
