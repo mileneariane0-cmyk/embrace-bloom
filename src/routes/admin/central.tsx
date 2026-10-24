@@ -2,20 +2,21 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { getAdminStatus } from "@/lib/admin.functions";
 import logo from "@/assets/personalize-logo.png.asset.json";
-import { LayoutDashboard, Paintbrush, PenTool, Mail, Link2, Package, Tags, ShoppingBag, Users, ClipboardList, Images, Settings, Menu, X, ShieldCheck } from "lucide-react";
+import { LayoutDashboard, Paintbrush, PanelsTopLeft, Mail, Link2, Package, Tags, ShoppingBag, Users, ClipboardList, Images, Settings, Menu, X, ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/admin/central")({ component: Central });
 export const adminModules = [
  {slug:"dashboard",title:"Dashboard",icon:LayoutDashboard},
  {slug:"personalizar-site",title:"Personalizar Site",icon:Paintbrush},
- {slug:"criar-convite",title:"Criar Convite Virtual",icon:PenTool},
- {slug:"convites",title:"Gerenciar Convites",icon:Mail},
+ {slug:"landing-pages",title:"Landing Pages de Convites",icon:PanelsTopLeft},
+ {slug:"modelos-landing",title:"Modelos de Landing Pages",icon:Mail},
  {slug:"links",title:"Links dos Convites",icon:Link2},
  {slug:"produtos",title:"Produtos",icon:Package},
  {slug:"categorias",title:"Categorias",icon:Tags},
  {slug:"pedidos",title:"Pedidos",icon:ShoppingBag},
  {slug:"clientes",title:"Clientes",icon:Users},
  {slug:"orcamentos",title:"Orçamentos",icon:ClipboardList},
+ {slug:"pagamentos",title:"Pagamentos",icon:ShoppingBag},
  {slug:"midias",title:"Arquivos e Mídias",icon:Images},
  {slug:"configuracoes",title:"Configurações",icon:Settings}
 ] as const;
