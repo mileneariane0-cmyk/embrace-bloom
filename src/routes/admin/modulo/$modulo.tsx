@@ -8,7 +8,7 @@ import { adminModules } from "../central";
 export const Route = createFileRoute("/admin/modulo/$modulo")({ component: ModulePage });
 type Row = Record<string,unknown>;
 const tables:Record<string,string>={
- convites:"invitation_models",links:"customer_invitations",produtos:"personalized_products",
+ "landing-pages":"customer_invitations","modelos-landing":"invitation_models",links:"customer_invitations",produtos:"personalized_products",
  categorias:"personalized_product_categories",pedidos:"customer_orders",clientes:"customer_profiles",orcamentos:"quote_requests"
 };
 function ModulePage(){
@@ -42,9 +42,9 @@ function ModulePage(){
   <div style={{maxWidth:1100,margin:"auto"}}><Link to="/admin/central" style={{display:"inline-flex",alignItems:"center",gap:7,color:"#75152f",textDecoration:"none"}}><ArrowLeft size={18}/> Voltar ao painel</Link><h1 style={{font:"normal 38px Georgia,serif",color:"#75152f"}}>{title}</h1>
   {allowed===null?<p>Verificando permissões...</p>:!allowed?<p>Acesso restrito. <Link to="/admin/login">Entrar</Link></p>:<>
    {modulo==="personalizar-site"&&<p>Este módulo é exclusivo para a aparência e o conteúdo da loja. Não modifica convites de clientes. O editor existente deve ser acessado pelo painel original até sua integração nesta navegação.</p>}
-   {modulo==="criar-convite"&&<div style={{background:"white",padding:24,borderRadius:16}}><h2>Criador de Convites Virtuais</h2><p>O editor visual completo ainda precisa ser conectado aos modelos e às instâncias de convites no Lovable Cloud. Nenhum rascunho fictício será criado.</p><Link to="/admin/modulo/$modulo" params={{modulo:"convites"}} style={{color:"#75152f"}}>Consultar modelos cadastrados</Link></div>}
+   {modulo==="landing-pages"&&<div style={{background:"white",padding:24,borderRadius:16}}><h2>Landing Pages de Convites</h2><p>As artes serão enviadas prontas pelo administrador. O construtor de blocos interativos será integrado às páginas individuais, sem ferramentas de desenho de convites.</p><Link to="/admin/modulo/$modulo" params={{modulo:"modelos-landing"}} style={{color:"#75152f"}}>Consultar modelos cadastrados</Link></div>}
    {modulo==="dashboard"&&<div style={{background:"white",padding:24,borderRadius:16}}><p>Os indicadores serão apresentados após a integração das consultas autorizadas de vendas, clientes e convites. Nenhuma métrica fictícia será exibida.</p></div>}
-   {!tables[modulo]&&!["dashboard","criar-convite","personalizar-site"].includes(modulo)&&<p>Este módulo aguarda integração com o serviço de dados e arquivos da loja. Nenhuma alteração foi feita nas configurações existentes.</p>}
+   {!tables[modulo]&&!["dashboard","landing-pages","personalizar-site"].includes(modulo)&&<p>Este módulo aguarda integração com o serviço de dados e arquivos da loja. Nenhuma alteração foi feita nas configurações existentes.</p>}
    {tables[modulo]&&<section style={{background:"white",border:"1px solid #f0e1e5",borderRadius:18,padding:"clamp(16px,4vw,26px)"}}>
     <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:12,marginBottom:20}}><label style={{display:"flex",alignItems:"center",gap:8,border:"1px solid #e9d8dc",borderRadius:12,padding:"10px 12px"}}><Search size={18}/><input aria-label="Pesquisar registros" placeholder="Pesquisar" value={search} onChange={e=>setSearch(e.target.value)} style={{border:0,outline:0,fontSize:15}}/></label>
      {["produtos","categorias"].includes(modulo)&&<button onClick={()=>setShowForm(v=>!v)} style={{display:"flex",alignItems:"center",gap:8,border:0,background:"#75152f",color:"white",borderRadius:12,padding:"12px 18px",cursor:"pointer"}}><Plus size={18}/>{modulo==="produtos"?"Cadastrar produto":"Nova categoria"}</button>}
