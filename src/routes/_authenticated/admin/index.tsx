@@ -13,6 +13,8 @@ export const Route = createFileRoute("/_authenticated/admin/")({
       { name: "description", content: "Painel administrativo da Personalizê." },
       { property: "og:title", content: "Painel — Personalizê" },
       { property: "og:description", content: "Painel administrativo da Personalizê." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -45,7 +47,7 @@ function Painel() {
     <AdminCard title="Painel administrativo" wide>
       <p style={{ textAlign: "center", color: "#716469" }}>Bem-vinda, {data.email}</p>
       <Link to="/admin/personalizar" style={{ ...s.button, display: "block", textAlign: "center", textDecoration: "none", boxSizing: "border-box" }}>Personalizar Site</Link>
-      <div style={s.ok}>Em breve: convites, links dos convites, pedidos e clientes.</div>
+      <Link to="/admin/gestao" style={{ ...s.button, display: "block", textAlign: "center", textDecoration: "none", boxSizing: "border-box", marginTop: 12 }}>Gestão: Convites, Links, Pedidos e Clientes</Link>
       <ChangePassword />
       <button style={{ ...s.button, background: "transparent", color: "#75152F", border: "1px solid #75152F" }} onClick={logout}>Sair</button>
     </AdminCard>

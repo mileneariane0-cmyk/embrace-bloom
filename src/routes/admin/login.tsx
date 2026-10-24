@@ -11,6 +11,8 @@ export const Route = createFileRoute("/admin/login")({
       { property: "og:title", content: "Administração Personalizê" },
       { property: "og:description", content: "Acesso restrito à administração da Personalizê." },
       { name: "robots", content: "noindex" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AdminLogin,
